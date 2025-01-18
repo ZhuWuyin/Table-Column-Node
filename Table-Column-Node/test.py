@@ -13,4 +13,4 @@ d1.append_col(c2)
 d1[1] = c3
 del d1[1]
 
-print(d1.print_table(reverse=False, get_content=True))
+print(Database.print_table(d1.root_col, reverse=False, get_content=True))

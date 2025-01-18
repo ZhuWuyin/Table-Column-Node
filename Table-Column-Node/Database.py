@@ -3,6 +3,18 @@ from Column import Column
 
 class Database:
 
+    @staticmethod
+    def get_table(col: Column, reverse: bool = False, get_content: bool = False) -> list[list[Node]]:
+        table = []
+        for node in col:
+            table.append(node.get_connected(reverse, get_content))
+        return table
+    
+    @staticmethod
+    def print_table(col: Column, reverse: bool = False, get_content: bool = False) -> str:
+        table = Database.get_table(col, reverse, get_content)
+        return '\n'.join([str([node for node in col]) for col in table])
+
     def __init__(self, col: Column = None):
         self.root_col = col.get_root()
         self.leaf_col = col.get_leaf()
@@ -15,16 +27,6 @@ class Database:
         col = col_or_lst if isinstance(col_or_lst, Column) else Column(col_or_lst)
         self.leaf_col.add_next_Column(col)
         self.leaf_col = col
-
-    def get_table(self, reverse: bool = False, get_content: bool = False) -> list[list[Node]]:
-        table = []
-        for node in self.root_col:
-            table.append(node.get_connected(reverse, get_content))
-        return table
-    
-    def print_table(self, reverse: bool = False, get_content: bool = False) -> str:
-        table = self.get_table(reverse, get_content)
-        return '\n'.join([str([node for node in col]) for col in table])
     
     def __getitem__(self, index: int):
         result = self.root_col
